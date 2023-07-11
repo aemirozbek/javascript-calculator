@@ -40,6 +40,14 @@ function App() {
       
       setTotal(prevArray => {
         if (
+          prevArray.length > 0 &&
+          prevArray[prevArray.length - 1].length === 1 &&
+          prevArray[prevArray.length - 1][0] === 0 &&
+          input===0
+        ) {
+          return prevArray
+        }
+        if (
           prevArray.length === 0 ||
           /[+\-x/]/.test(prevArray[prevArray.length - 1])
         ) {
@@ -65,9 +73,9 @@ function App() {
         setTotal(prevArray => {
           if (prevArray.length === 0) {
             return [...prevArray, [0], input]
-          } else if(input==="-" && !/[+\-x/.]/.test(prevArray[prevArray.length-2])) {
+          } else if(input==="-" && /[0-9.]/.test(prevArray[prevArray.length-2])) {
             return [...prevArray, input]
-          } else if(/[+\-x/]/.test(input) && !/[+\-x/]/.test(prevArray[prevArray.length-1])) {
+          } else if(/[+\-x/]/.test(input) && /[0-9.]/.test(prevArray[prevArray.length-1])) {
             return [...prevArray, input]
           } else return prevArray
         });
@@ -80,6 +88,7 @@ function App() {
     const operatorArray = [multiply, divide, add, subtract]
     const operatorSymbols = ["x", "/", "+", "-"]
       let newTotal = [...total];
+      if(!result==""){return}
       if(/[+\-x/]/.test(newTotal[newTotal.length-1]) && /[+\-x/]/.test(newTotal[newTotal.length-2])) { // if the last two characters are operators
         setTotal(prevArray => [...prevArray.slice(0, -2)])
         newTotal.pop()
@@ -89,11 +98,8 @@ function App() {
       newTotal.pop()
     }
 
-    // if(/[+\-x/]/.test(newTotal.join(""))) { // if there is a subtraction after another operator in a calculation
-      
-    // } newTotal = [[1], "x", "-", [1]];
 
-    for(let i = 0; i < newTotal.length-2; i++) {
+    for(let i = 0; i < newTotal.length-2; i++) { // if there is a subtraction after another operator in a calculation
       for(let j = 0; j < operatorSymbols.length; j++) {
         if(newTotal[i]===operatorSymbols[j]) {
           if(newTotal[i+1]==="-") {
@@ -119,9 +125,9 @@ function App() {
       setResult(newTotal);
     }
     }
+      setTotal(prevArray=>[...prevArray, " = ", ...newTotal]);
   }
-  console.log(total);
-
+  
 
 
 
