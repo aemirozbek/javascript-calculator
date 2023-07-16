@@ -1,18 +1,6 @@
 import { useState } from "react";
 
 function App() {
-  const numbers = [
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ];
   function multiply(x, y) {
     return x * y;
   }
@@ -31,6 +19,17 @@ function App() {
   function handleInput(input) {
     if (/[0-9.]/.test(input)) {
       // below here numbers are handled
+      if(total.length>0 && total[total.length - 1].length>21 && total[0]!=="DIGIT LIMIT MET") {
+        const preservedTotal = total;
+        setTotal(["DIGIT LIMIT MET"])
+        setTimeout(() => {
+          setTotal(preservedTotal)
+        }, 1000);
+        return
+      }
+      if(total[0]==="DIGIT LIMIT MET") {
+        return
+      }
       if (!result == "" && !/[+\-x/]/.test(total[total.length - 1])) {
         // If the input is a number, add it to the current subarray
         setTotal([]);
@@ -150,42 +149,43 @@ function App() {
 
   return (
     <div id="calculator">
-      <button
-        id="clear"
-        onClick={() => {
-          setTotal([]);
-          setResult("");
-        }}
-      >
+  <div id="formula">{total}</div>
+  <div id="display">{total.length === 0 ? [0] : total[total.length - 1]}</div>
+  <div id="buttons">
+      <button id="clear" onClick={() => { if(total[0]!=="DIGIT LIMIT MET"){setTotal([]); setResult("");} }}>
         AC
       </button>
-      {numbers.map((e, index) => (
-        <button id={e} key={e} onClick={() => handleInput(index)}>
-          {index}
-        </button>
-      ))}
-      <button id="add" onClick={() => handleInput("+")}>
-        +
-      </button>
-      <button id="subtract" onClick={() => handleInput("-")}>
-        -
-      </button>
-      <button id="multiply" onClick={() => handleInput("x")}>
-        x
-      </button>
-      <button id="divide" onClick={() => handleInput("/")}>
+      <button id="divide" className="operator" onClick={() => handleInput("/")}>
         /
       </button>
+      <button id="multiply" className="operator" onClick={() => handleInput("x")}>
+        x
+      </button>
+      <button onClick={() => handleInput(7)}>7</button>
+      <button onClick={() => handleInput(8)}>8</button>
+      <button onClick={() => handleInput(9)}>9</button>
+      <button id="subtract" className="operator" onClick={() => handleInput("-")}>
+        -
+      </button>
+      <button onClick={() => handleInput(4)}>4</button>
+      <button onClick={() => handleInput(5)}>5</button>
+      <button onClick={() => handleInput(6)}>6</button>
+      <button id="add" className="operator" onClick={() => handleInput("+")}>
+        +
+      </button>
+      <button onClick={() => handleInput(1)}>1</button>
+      <button onClick={() => handleInput(2)}>2</button>
+      <button onClick={() => handleInput(3)}>3</button>
+      <button id="zero" onClick={() => handleInput(0)}>0</button>
       <button id="decimal" onClick={() => handleInput(".")}>
         .
       </button>
       <button id="equals" onClick={handleEquals}>
         =
       </button>
-      <div id="formula">{total}</div>
-      {total.length === 0 && <div id="display">{[0]}</div>}
-      {total.length > 0 && <div id="display">{total[total.length - 1]}</div>}
-    </div>
+  </div>
+</div>
+
   );
 }
 
