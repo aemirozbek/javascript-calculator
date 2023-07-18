@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/alarm-clock');
+@import url('https://fonts.cdnfonts.com/css/lcd');
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 body {
@@ -16,18 +16,18 @@ code {
     monospace;
 }
 
-#calculator {
+#container {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Ensure the body takes up the full viewport height */
   display: flex;
-  flex-direction: column;
+  align-items: center; /* Vertically center the content */
+  justify-content: center;
+}
+
+#calculator {
   width: 300px;
-  height: 370px;
   background-color: rgb(58, 58, 58);
-  position: absolute; /*Can also be `fixed`*/
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -37,24 +37,22 @@ code {
   width: 100%;
   text-align: end;
   min-height: 25px;
-  font-family: 'alarm clock', sans-serif;
-  color: rgb(136, 179, 157);
+  font-family: 'LCD', sans-serif;
+  color: rgb(80, 80, 80);
   font-size: 20px;
-  letter-spacing: -2px;
   overflow-wrap: break-word;
-  background-color: black;
+  background-color: rgb(136, 179, 157);
 }
 
 #display {
   width: 100%;
   text-align: end;
-  height: 20px;
-  font-family: 'alarm clock', sans-serif;
-  color: aliceblue;
+  height: 30px;
+  font-family: 'LCD', sans-serif;
+  color: black;
   font-size: 25px;
-  letter-spacing: -2px;
   overflow-inline: clip;
-  background-color: black;
+  background-color: rgb(136, 179, 157);
 }
 
 #buttons {
@@ -87,8 +85,6 @@ button {
   width: 75px;
   overflow: visible;
   position: absolute;
-  right: 10px;
-  bottom: 15px;
   background-color: grey;
 }
 

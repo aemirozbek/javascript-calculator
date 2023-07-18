@@ -19,15 +19,15 @@ function App() {
   function handleInput(input) {
     if (/[0-9.]/.test(input)) {
       // below here numbers are handled
-      if(total.length>0 && total[total.length - 1].length>21 && total[0]!=="DIGIT LIMIT MET") {
+      if(total.length>0 && total[total.length - 1].length>21 && total[total.length-1]!=="DIGIT LIMIT MET") {
         const preservedTotal = total;
-        setTotal(["DIGIT LIMIT MET"])
+        setTotal([...preservedTotal, "DIGIT LIMIT MET"])
         setTimeout(() => {
           setTotal(preservedTotal)
         }, 1000);
         return
       }
-      if(total[0]==="DIGIT LIMIT MET") {
+      if(total[total.length-1]==="DIGIT LIMIT MET") {
         return
       }
       if (!result == "" && !/[+\-x/]/.test(total[total.length - 1])) {
@@ -148,11 +148,12 @@ function App() {
   }
 
   return (
-    <div id="calculator">
-  <div id="formula">{total}</div>
+    <div id="container">
+      <div id="calculator">
+  <div id="formula">{total[total.length-1] !== "DIGIT LIMIT MET" ? total : total.splice(0, total.length-1)}</div>
   <div id="display">{total.length === 0 ? [0] : total[total.length - 1]}</div>
   <div id="buttons">
-      <button id="clear" onClick={() => { if(total[0]!=="DIGIT LIMIT MET"){setTotal([]); setResult("");} }}>
+      <button id="clear" onClick={() => { if(total[total.length-1]!=="DIGIT LIMIT MET"){setTotal([]); setResult("");} }}>
         AC
       </button>
       <button id="divide" className="operator" onClick={() => handleInput("/")}>
@@ -161,31 +162,31 @@ function App() {
       <button id="multiply" className="operator" onClick={() => handleInput("x")}>
         x
       </button>
-      <button onClick={() => handleInput(7)}>7</button>
-      <button onClick={() => handleInput(8)}>8</button>
-      <button onClick={() => handleInput(9)}>9</button>
+      <button id="seven" onClick={() => handleInput(7)}>7</button>
+      <button id="eight" onClick={() => handleInput(8)}>8</button>
+      <button id="nine" onClick={() => handleInput(9)}>9</button>
       <button id="subtract" className="operator" onClick={() => handleInput("-")}>
         -
       </button>
-      <button onClick={() => handleInput(4)}>4</button>
-      <button onClick={() => handleInput(5)}>5</button>
-      <button onClick={() => handleInput(6)}>6</button>
+      <button id="four" onClick={() => handleInput(4)}>4</button>
+      <button id="five" onClick={() => handleInput(5)}>5</button>
+      <button id="six" onClick={() => handleInput(6)}>6</button>
       <button id="add" className="operator" onClick={() => handleInput("+")}>
         +
       </button>
-      <button onClick={() => handleInput(1)}>1</button>
-      <button onClick={() => handleInput(2)}>2</button>
-      <button onClick={() => handleInput(3)}>3</button>
+      <button id="one" onClick={() => handleInput(1)}>1</button>
+      <button id="two" onClick={() => handleInput(2)}>2</button>
+      <button id="three" onClick={() => handleInput(3)}>3</button>
+      <button id="equals" onClick={handleEquals}>
+        =
+      </button>
       <button id="zero" onClick={() => handleInput(0)}>0</button>
       <button id="decimal" onClick={() => handleInput(".")}>
         .
       </button>
-      <button id="equals" onClick={handleEquals}>
-        =
-      </button>
   </div>
 </div>
-
+    </div>
   );
 }
 
